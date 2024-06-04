@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Deportes</h2>
+  <ul>
+    {% for deporte in deportes %}
+      <li><a href="{% url 'deporte_detail' deporte.pk %}">{{ deporte.nombre }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'deporte_new' %}">Añadir Deporte</a>
+{% endblock %}
