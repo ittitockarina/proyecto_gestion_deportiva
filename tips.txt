@@ -1,0 +1,5 @@
+sudo apt-get install python3-virtualenv
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+django-admin startproject app_deportivo
