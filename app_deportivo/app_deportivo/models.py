@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Deporte(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,11 +11,12 @@ class Entrenador(models.Model):
     especialidad = models.ForeignKey(Deporte, on_delete=models.CASCADE)
     email = models.EmailField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
-
+    #falta usuario
 class Federacion(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.TextField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
+        #falta usuario
 
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
@@ -22,6 +24,10 @@ class Equipo(models.Model):
     entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE)
     deporte = models.ForeignKey(Deporte, on_delete=models.CASCADE)
     federacion = models.ForeignKey(Federacion, on_delete=models.CASCADE)
+        #falta usuario
+
+
+
 
 class Atleta(models.Model):
     nombre = models.CharField(max_length=100)
@@ -34,6 +40,7 @@ class Atleta(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     email = models.EmailField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
+    #falta usuario
 
 class Instalacion(models.Model):
     nombre = models.CharField(max_length=100)
@@ -78,12 +85,25 @@ class Inscripcion(models.Model):
     fecha_inscripcion = models.DateField()
     estado = models.CharField(max_length=20)
 
+
+
 class Usuario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dni = models.CharField(max_length=9, unique=True, null=True, blank=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
-    rol = models.CharField(max_length=50, choices=[('atleta', 'Atleta'), ('entrenador', 'Entrenador'), ('administrador', 'Administrador')])
+    telefono = models.CharField(max_length=15, null=True, blank=True)
+    rol = models.CharField(
+        max_length=50, 
+        choices=[
+            ('atleta', 'Atleta'), 
+            ('entrenador', 'Entrenador'), 
+            ('administrador', 'Administrador')
+        ]
+    )
+
+    def __str__(self):
+        return self.user.username
 
 class Evento(models.Model):
     nombre = models.CharField(max_length=100)
