@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 
-from django.urls import path
+from django.urls import path, include 
 from .views import (index,DeporteListView, DeporteDetailView, DeporteCreateView, DeporteUpdateView, DeporteDeleteView,
                     EntrenadorListView, EntrenadorDetailView, EntrenadorCreateView, EntrenadorUpdateView, EntrenadorDeleteView)
 
@@ -37,4 +37,7 @@ urlpatterns = [
     path('entrenadores/new/', EntrenadorCreateView.as_view(), name='entrenador_new'),
     path('entrenadores/<int:pk>/edit/', EntrenadorUpdateView.as_view(), name='entrenador_edit'),
     path('entrenadores/<int:pk>/delete/', EntrenadorDeleteView.as_view(), name='entrenador_delete'),
+
+    path('auth/', include('autenticacion.urls')),
+
 ]
