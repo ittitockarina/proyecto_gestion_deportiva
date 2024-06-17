@@ -1,6 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Usuario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dni = models.CharField(max_length=9, unique=True, null=True, blank=True)
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=9, null=True, blank=True)
+    rol = models.CharField(
+        max_length=50, 
+        choices=[
+            ('atleta', 'Atleta'), 
+            ('entrenador', 'Entrenador'), 
+            ('administrador', 'Administrador')
+        ]
+    )
+
+    def __str__(self):
+        return self.user.username
+
+
 class Deporte(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
@@ -11,12 +30,12 @@ class Entrenador(models.Model):
     especialidad = models.ForeignKey(Deporte, on_delete=models.CASCADE)
     email = models.EmailField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
-    #falta usuario
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    #falta usuario 
 class Federacion(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.TextField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
-        #falta usuario
 
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
@@ -24,7 +43,8 @@ class Equipo(models.Model):
     entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE)
     deporte = models.ForeignKey(Deporte, on_delete=models.CASCADE)
     federacion = models.ForeignKey(Federacion, on_delete=models.CASCADE)
-        #falta usuario
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    
 
 
 
@@ -40,12 +60,18 @@ class Atleta(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     email = models.EmailField(blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
-    #falta usuario
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    faltas = models.TextField(blank=True, null=True)  # tarjeta amarilla, roja
+   
 
 class Instalacion(models.Model):
     nombre = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=100)
     direccion = models.TextField(blank=True, null=True)
     capacidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    encargado = models.CharField(max_length=100)
+    
 
 class Disciplina(models.Model):
     nombre = models.CharField(max_length=100)
@@ -67,8 +93,11 @@ class Competencia(models.Model):
     disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
+#cambialo por premio
 class Medalla(models.Model):
     tipo = models.CharField(max_length=10)
+    descripcion = models.CharField(max_length=20)
+    #
     competencia = models.ForeignKey(Competencia, on_delete=models.CASCADE)
     atleta = models.ForeignKey(Atleta, on_delete=models.CASCADE)
 
@@ -84,26 +113,12 @@ class Inscripcion(models.Model):
     competencia = models.ForeignKey(Competencia, on_delete=models.CASCADE)
     fecha_inscripcion = models.DateField()
     estado = models.CharField(max_length=20)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    #precio
 
 
 
-class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dni = models.CharField(max_length=9, unique=True, null=True, blank=True)
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
-    telefono = models.CharField(max_length=15, null=True, blank=True)
-    rol = models.CharField(
-        max_length=50, 
-        choices=[
-            ('atleta', 'Atleta'), 
-            ('entrenador', 'Entrenador'), 
-            ('administrador', 'Administrador')
-        ]
-    )
 
-    def __str__(self):
-        return self.user.username
 
 class Evento(models.Model):
     nombre = models.CharField(max_length=100)
