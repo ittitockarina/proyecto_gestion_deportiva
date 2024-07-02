@@ -17,27 +17,17 @@ Including another URLconf
 from django.contrib import admin
 
 from django.urls import path, include 
-from .views import (index,DeporteListView, DeporteDetailView, DeporteCreateView, DeporteUpdateView, DeporteDeleteView,
-                    EntrenadorListView, EntrenadorDetailView, EntrenadorCreateView, EntrenadorUpdateView, EntrenadorDeleteView)
+from .views import (index)
 
 urlpatterns = [
     path('', index, name='index'),
     path("admin/", admin.site.urls),
-    # Aquí van tus otras rutas
-    # Deporte URLs
-    path('deportes/', DeporteListView.as_view(), name='deporte_list'),
-    path('deportes/<int:pk>/', DeporteDetailView.as_view(), name='deporte_detail'),
-    path('deportes/new/', DeporteCreateView.as_view(), name='deporte_new'),
-    path('deportes/<int:pk>/edit/', DeporteUpdateView.as_view(), name='deporte_edit'),
-    path('deportes/<int:pk>/delete/', DeporteDeleteView.as_view(), name='deporte_delete'),
-
-    # Entrenador URLs
-    path('entrenadores/', EntrenadorListView.as_view(), name='entrenador_list'),
-    path('entrenadores/<int:pk>/', EntrenadorDetailView.as_view(), name='entrenador_detail'),
-    path('entrenadores/new/', EntrenadorCreateView.as_view(), name='entrenador_new'),
-    path('entrenadores/<int:pk>/edit/', EntrenadorUpdateView.as_view(), name='entrenador_edit'),
-    path('entrenadores/<int:pk>/delete/', EntrenadorDeleteView.as_view(), name='entrenador_delete'),
-
+    
+    # Otras URLs del proyecto
     path('auth/', include('autenticacion.urls')),
+    path('atletas/', include('atletas.urls')),
+    path('categorias/', include('categorias.urls')), 
+    path('competencias/', include('competencias.urls')), 
+    path('deportes/', include('deportes.urls')),
 
 ]

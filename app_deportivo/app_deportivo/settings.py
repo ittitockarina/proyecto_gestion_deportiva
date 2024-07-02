@@ -45,6 +45,20 @@ INSTALLED_APPS = [
 
     'autenticacion',
     'app_deportivo',
+    'atletas',
+    'categorias',
+    'competencias',
+    'deportes',
+    'usuarios',  # Asegúrate de que 'usuarios' esté listado aquí
+    'entrenadores',
+    
+    
+    'federaciones',
+    'instalaciones',
+    'disciplinas',
+    'equipos',
+    'eventos',
+    'sponsors',
 ]
 
 MIDDLEWARE = [
