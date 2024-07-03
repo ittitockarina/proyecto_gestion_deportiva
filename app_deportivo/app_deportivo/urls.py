@@ -15,19 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-
-from django.urls import path, include 
-from .views import (index)
+from django.urls import path, include
+from .views import index  # Asegúrate de importar 'index' correctamente desde '.views'
 
 urlpatterns = [
-    path('', index, name='index'),
-    path("admin/", admin.site.urls),
+    path('', index, name='index'),  # Ruta principal que usa la vista 'index'
+    path('admin/', admin.site.urls),
     
-    # Otras URLs del proyecto
-    path('auth/', include('autenticacion.urls')),
-    path('atletas/', include('atletas.urls')),
-    path('categorias/', include('categorias.urls')), 
-    path('competencias/', include('competencias.urls')), 
-    path('deportes/', include('deportes.urls')),
-
+    # Añade aquí las URLs de tus aplicaciones
+    path('auth/', include('autenticacion.urls')),  # Ajusta según la estructura de tus aplicaciones
+    path('atletas/', include('atletas.urls')),  # Ajusta según la estructura de tus aplicaciones
+    path('categorias/', include('categorias.urls')),  # Ajusta según la estructura de tus aplicaciones
+    path('competencias/', include('competencias.urls')),  # Ajusta según la estructura de tus aplicaciones
+    path('deportes/', include('deportes.urls')),  # Ajusta según la estructura de tus aplicaciones
 ]
