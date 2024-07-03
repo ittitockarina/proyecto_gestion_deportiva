@@ -2,4 +2,11 @@ sudo apt-get install python3-virtualenv
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
-django-admin startproject app_deportivo
+django-admin startproject app_deportivo //crear una app para gestion deportiva
+
+npm install -g @angular/cli
+npm install
+ng serve
+
+ng generate component components/entrenador
+
